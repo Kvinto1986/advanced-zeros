@@ -1,24 +1,33 @@
 module.exports = function getZerosCount(number, base) {
-    var zeros_one = 0;
-    var count=base;
-    var tmp = 2;
-    var evr=5;
-if(base%2!=0 || base==16||  base==64){
-    evr=base
-}
-else if(base==Math.pow(2,count/2))
-    evr=base
-       else do {
-            tmp = count / 2;
-            count = tmp
-        if(count%2!=0 && count%3==0 &&count!=3)
-                evr=count/3
-            else evr=tmp
-        }
-        while (count%2==0)
+    let zeros = 0;
+    let bool = false;
+    let tmp = [];
+    while (bool === false) {
+        for (let i = 2; i <= base; i++) {
+            if (base % i === 0 && i !== base) {
+                base = base / i;
+                tmp.push(i);
+                break
+            }
+            else if (i === base) {
+                tmp.push(base);
+                bool = true;
+            }
 
-    for(var i=evr;number/i>=1;i=i*evr) {
-        zeros_one = zeros_one + Math.floor(number/ i);
+        }
+
     }
-    return zeros_one;
-  }
+    let num = 0;
+    for (let i = 0; i < tmp.length; i++) {
+        if (tmp[i] === base) {
+            num++;
+        }
+
+    }
+
+    for (let i = base; number / i >= 1; i = i * base) {
+        zeros = zeros + Math.floor(number / i);
+    }
+
+    return Math.floor(zeros / num);
+}
